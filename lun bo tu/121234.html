@@ -56,6 +56,28 @@
 			.left:hover,.right:hover{
 				background-color: rgba(0,0,0,.8);
 			}
+			.yuan{
+				padding: 10px;
+				position: absolute;
+				top: 170px;
+				left: 35%;
+				z-index: 3;
+			}
+			.yuan li{
+				width: 10px;
+				display: inline-block;
+				height: 10px;
+				background-color: #fff;
+				border-radius: 50%;
+				border: 1px solid #000;
+				margin-left: 10px;
+				position: relative;
+			}
+			.yuan .actli{
+				background-color: red;
+				box-shadow: 0 0 3px red;
+				
+			}
 		</style>
 	</head>
 	<body>
@@ -75,6 +97,9 @@
 			<div class="right">
 				右
 			</div>
+			<ul class="yuan">
+				<li></li>
+			</ul>
 		</div>
 		
 		
@@ -82,9 +107,40 @@
 		var iswan = true;
 		var timer = null;
 		
-		
+		/*多的删除,少了增加
+				if(ml > ym_di){
+					for(var m = ym_di ; m<ml;m++){
+						$mainBox.append($("#i_fenlei_main_aj li:eq(1)").clone(true,true));
+					}
+					fub(msg,ml,0)
+		  		}else{
+		  			for(var j = ym_di; j>ml;j--){
+						$("#i_fenlei_main_aj li:nth-child("+j+")").remove();				
+					}
+		  			fub(msg,ml,0)
+		  		}*/
 			(function(){
-
+				var imgL =$(".box li").length - 0 ;
+				var yuanL =$(".yuan li").length - 0 ;
+				var ml = imgL-2 ;
+				var $imgLi = $(".box li");
+				var $yuan = $(".yuan"); 
+				for(var i = yuanL ;i<ml;i++){
+					$yuan.append($yuan.find("li").eq(0).clone(true,true));
+					console.log(333)
+				}
+				$yuan.find("li").eq(0).addClass("actli").siblings("li").removeClass("actli")
+				for(var j = 0 ;j<imgL;j++){
+					
+					if(j == 0){
+						$imgLi.eq(j).attr("indd",imgL-2)
+					}else if(j == (imgL-1)){
+						$imgLi.eq(j).attr("indd",1)
+					}else{
+						$imgLi.eq(j).attr("indd",j)
+					}
+				}
+	
 				$("#code").mouseenter(function(){
 					clearInterval(timer)
 				})
@@ -143,12 +199,16 @@
 						}else{						
 							lese = nowLeft + imgW +"px" ;
 						}
-						console.log(lese)
+						
 					}
 						
-	//				console.log(lese)
+//					console.log(~~lese)
 					_$ulW.animate({left:lese},500,"linear",function(){							
-									iswan = true;														
+									iswan = true;
+									var ssse = -parseInt(lese)/imgW - 1
+//									console.log()
+									$yuan.find("li").eq(ssse).addClass("actli").siblings("li").removeClass("actli")
+									
 						});												
 				}
 			
